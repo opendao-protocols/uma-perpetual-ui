@@ -1,0 +1,73 @@
+{
+  "name": "emp-tools",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "build:static": "next build && next export",
+    "start": "next start",
+    "chain": "ts-node -O '{\"module\":\"commonjs\"}' chain.ts",
+    "lint": "prettier './**/*.{ts,tsx,css,html,md}' --write",
+    "test": "jest -c jest.config.js",
+    "watch-test": "jest -c jest.config.js --watch"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.0.1",
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@renproject/gateway": "^1.0.13",
+    "@studydefi/money-legos": "^2.3.2",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "apexcharts": "^3.20.0",
+    "bignumber.js": "^9.0.1",
+    "bnc-notify": "^1.2.4",
+    "bnc-onboard": "^1.14.0",
+    "date-fns": "^2.14.0",
+    "ethers": "^5.0.1",
+    "graphql": "^15.3.0",
+    "isomorphic-fetch": "^3.0.0",
+    "jazzicon": "^1.5.0",
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-apexcharts": "^1.3.7",
+    "react-dom": "^16.13.1",
+    "rxjs": "^6.5.5",
+    "styled-components": "^5.1.1",
+    "unstated-next": "^1.1.0",
+    "wallet-address-validator": "^0.2.4"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "@testing-library/user-event": "^12.1.7",
+    "@types/node": "^14.0.13",
+    "@types/react": "^16.9.36",
+    "@types/styled-components": "^5.1.0",
+    "babel-jest": "^26.5.2",
+    "babel-plugin-styled-components": "^1.11.0-0",
+    "dotenv": "^8.2.0",
+    "ganache-core": "^2.10.2",
+    "husky": "^4.2.3",
+    "lint-staged": ">=10",
+    "prettier": "^2.0.5",
+    "react-scripts": "^3.4.3",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": true,
+    "singleQuote": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo '🛁 Linting staged files' && lint-staged && echo '🔏 Compiling Typescript' && npx tsc"
+    }
+  },
+  "license": "ISC",
+  "lint-staged": {
+    "*.{ts,tsx,css,html,md}": "prettier --write"
+  }
+}

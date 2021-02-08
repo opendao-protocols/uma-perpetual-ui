@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "FormularMonoW03-Regular";
+  src: url("/fonts/FormularMonoW03-Regular.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Formular-Medium;
+  src: url("/fonts/Formular-Medium.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+
+a,
+a:visited {
+  color: white;
+}
+
+a:hover {
+  color: #2e2fff !important;
+}
+
+.social-media-icons {
+  max-height: 18px;
+  margin-top: -3.5px;
+}
+
+.MuiButtonBase-root:disabled {
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+
+.MuiButton-contained {
+  border: none;
+  font-weight: 700;
+  color: #fafaff;
+  font-size: 0.85rem;
+  line-height: 141.44%;
+  padding: 0.8rem 1.6rem !important;
+  box-sizing: border-box;
+  border-radius: 117.5px;
+  letter-spacing: 0.6px;
+  background: linear-gradient(90deg, #b464ff 26%, #4c3eff 90%);
+}
+
+.MuiButton-contained:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  background-color: #1f1f2c;
+}
+
+.MuiPaper-root {
+  background-color: #1f1f2c;
+}
+
+/* Hide What is a wallet container (Onboard js) */
+.bn-onboard-select-info-container {
+  display: none !important;
+}
