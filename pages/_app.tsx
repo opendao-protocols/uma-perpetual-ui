@@ -3,25 +3,11 @@ import Head from "next/head";
 
 import "../utils/global.css";
 
+import { ApolloProvider } from "@apollo/client";
 import { WithStylingProviders } from "../utils/styling";
 import Connection from "../containers/Connection";
-// import EmpContract from "../containers/EmpContract";
-// import EmpAddress from "../containers/EmpAddress";
-// import EmpState from "../containers/EmpState";
-// import EmpSponsors from "../containers/EmpSponsors";
-// import Collateral from "../containers/Collateral";
-// import Token from "../containers/Token";
-// import Position from "../containers/Position";
-// import Totals from "../containers/Totals";
-// import PriceFeed from "../containers/PriceFeed";
-// import WethContract from "../containers/WethContract";
-// import Etherscan from "../containers/Etherscan";
-// import Balancer from "../containers/Balancer";
-// import DvmContracts from "../containers/DvmContracts";
-// import DvmState from "../containers/DvmState";
-// import DevMining from "../containers/DevMining";
+import PerpAddresses from "../containers/PerpAddresses";
 
-import { ApolloProvider } from "@apollo/client";
 import { client } from "../apollo/client";
 
 interface IProps {
@@ -31,40 +17,12 @@ interface IProps {
 const WithStateContainerProviders = ({ children }: IProps) => (
   <ApolloProvider client={client}>
     <Connection.Provider>
-      {/* <EmpAddress.Provider>
-        <EmpContract.Provider>
-          <WethContract.Provider>
-            <EmpState.Provider>
-              <Token.Provider>
-                <Collateral.Provider>
-                  <PriceFeed.Provider>
-                    <EmpSponsors.Provider>
-                      <Totals.Provider>
-                        <Etherscan.Provider>
-                          <Position.Provider>
-                            <Balancer.Provider>
-                              <DvmContracts.Provider>
-                                <DvmState.Provider>
-                                  <DevMining.Provider> */}
-                                    {children}
-                                  {/* </DevMining.Provider>
-                                </DvmState.Provider>
-                              </DvmContracts.Provider>
-                            </Balancer.Provider>
-                          </Position.Provider>
-                        </Etherscan.Provider>
-                      </Totals.Provider>
-                    </EmpSponsors.Provider>
-                  </PriceFeed.Provider>
-                </Collateral.Provider>
-              </Token.Provider>
-            </EmpState.Provider>
-          </WethContract.Provider>
-        </EmpContract.Provider>
-      </EmpAddress.Provider> */}
+      <PerpAddresses.Provider>
+        {children}
+      </PerpAddresses.Provider>
     </Connection.Provider>
   </ApolloProvider>
-);
+)
 
 export default class MyApp extends App {
   componentDidMount() {
