@@ -7,6 +7,8 @@ import { ApolloProvider } from "@apollo/client";
 import { WithStylingProviders } from "../utils/styling";
 import Connection from "../containers/Connection";
 import PerpAddresses from "../containers/PerpAddresses";
+import PerpContract from "../containers/PerpContract";
+import PerpState from "../containers/PerpState";
 
 import { client } from "../apollo/client";
 
@@ -18,7 +20,11 @@ const WithStateContainerProviders = ({ children }: IProps) => (
   <ApolloProvider client={client}>
     <Connection.Provider>
       <PerpAddresses.Provider>
-        {children}
+        <PerpContract.Provider>
+          <PerpState.Provider>
+            {children}
+          </PerpState.Provider>
+        </PerpContract.Provider>
       </PerpAddresses.Provider>
     </Connection.Provider>
   </ApolloProvider>
