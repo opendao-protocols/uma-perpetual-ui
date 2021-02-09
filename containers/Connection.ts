@@ -20,7 +20,7 @@ function useConnection() {
   const [onboard, setOnboard] = useState<OnboardApi | null>(null);
   const [signer, setSigner] = useState<Signer | null>(null);
   const [network, setNetwork] = useState<Network | null>(null);
-  const [address, setAddress] = useState<string | null>(null);
+  const [userAddress, setUserAddress] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [block$, setBlock$] = useState<Observable<Block> | null>(null);
 
@@ -31,11 +31,11 @@ function useConnection() {
       networkId: 1, // Default to main net. If on a different network will change with the subscription.
       subscriptions: {
         address: (address: string | null) => {
-          setAddress(address);
+          setUserAddress(address);
         },
         network: async (networkId: any) => {
           if (!SUPPORTED_NETWORK_IDS.includes(networkId)) {
-            alert("This dApp will work only with the Mainnet or Kovan network");
+            alert("This dApp will work only with the Mainnet");
           }
           onboard?.config({ networkId: networkId });
         },
@@ -86,17 +86,17 @@ function useConnection() {
       setBlock$(block$);
     }
 
-    if (provider && address) {
+    if (provider && userAddress) {
       setSigner(provider.getSigner());
     }
-  }, [provider, address]);
+  }, [provider, userAddress]);
 
   return {
     provider,
     onboard,
     signer,
     network,
-    address,
+    userAddress,
     connect,
     error,
     block$,
