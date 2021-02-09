@@ -1,12 +1,11 @@
 {
-  "name": "emp-tools",
+  "name": "uma-perpetual-ui",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "build:static": "next build && next export",
     "start": "next start",
-    "chain": "ts-node -O '{\"module\":\"commonjs\"}' chain.ts",
     "lint": "prettier './**/*.{ts,tsx,css,html,md}' --write",
     "test": "jest -c jest.config.js",
     "watch-test": "jest -c jest.config.js --watch"
