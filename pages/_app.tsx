@@ -9,6 +9,8 @@ import Connection from "../containers/Connection";
 import PerpAddresses from "../containers/PerpAddresses";
 import PerpContract from "../containers/PerpContract";
 import PerpState from "../containers/PerpState";
+import Token from "../containers/Token";
+import Collateral from "../containers/Collateral";
 
 import { client } from "../apollo/client";
 
@@ -22,7 +24,11 @@ const WithStateContainerProviders = ({ children }: IProps) => (
       <PerpAddresses.Provider>
         <PerpContract.Provider>
           <PerpState.Provider>
-            {children}
+            <Token.Provider>
+              <Collateral.Provider>
+                {children}
+              </Collateral.Provider>
+            </Token.Provider>
           </PerpState.Provider>
         </PerpContract.Provider>
       </PerpAddresses.Provider>
