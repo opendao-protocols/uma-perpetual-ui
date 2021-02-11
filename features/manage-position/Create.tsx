@@ -1,4 +1,3 @@
-// import { utils } from "ethers";
 import styled from "styled-components";
 import {
   Box,
@@ -9,11 +8,12 @@ import {
   Tooltip,
   InputAdornment,
 } from "@material-ui/core";
-
-// import { toBn } from "../../utils/BN";
-import { decimalsToToken, tokenToDecimals } from "../../utils/tokenBalances";
-import PerpContract from "../../containers/PerpContract";
 import { useState, useEffect } from "react";
+
+import { decimalsToToken, tokenToDecimals } from "../../utils/tokenBalances";
+import { createTxError } from "../../utils/ethTxErrorHandler";
+import { tag } from "../../utils/devMiningTag";
+import PerpContract from "../../containers/PerpContract";
 import Collateral from "../../containers/Collateral";
 import Token from "../../containers/Token";
 import PerpState from "../../containers/PerpState";
@@ -23,52 +23,14 @@ import PriceFeed from "../../containers/PriceFeed";
 import Etherscan from "../../containers/Etherscan";
 import Connection from "../../containers/Connection";
 
-// import { legacyEMPs } from "../../constants/legacyEmps";
-// import { getLiquidationPrice } from "../../utils/getLiquidationPrice";
-// import { isPricefeedInvertedFromTokenSymbol } from "../../utils/getOffchainPrice";
-// import { DOCS_MAP } from "../../constants/docLinks";
-// import { toWeiSafe } from "../../utils/convertToWeiSafely";
-import { tag } from "../../utils/devMiningTag";
-
-// import YieldCalculator from "../yield/YieldCalculator";
-// import YieldFarmingCalculator from "../yield/FarmingCalculator";
-// import FarmingCalculator from "../liquidity-mining/FarmingCalculator";
-
-// import { getExchangeInfo } from "../../utils/getExchangeLinks";
-
-// import Balancer from "../../containers/Balancer";
-// import WethContract from "../../containers/WethContract";
-
-// import Weth from "../weth/Weth";
-// import RenBTC from "../renbtc/RenBTC";
-
-const Important = styled(Typography)`
-  color: red;
-  background: black;
-  display: inline-block;
-`;
-
 const Link = styled.a`
   color: white;
   font-size: 14px;
 `;
 
-const HeadingData = styled.div`
-  color: white;
-  font-size: 20px;
-  font-style: italic;
-`;
-
 const MinLink = styled.div`
   text-decoration-line: underline;
 `;
-
-const OutlinedContainer = styled.div`
-  padding: 1rem;
-  border: 1px solid #434343;
-`;
-
-// const { parseBytes32String: hexToUtf8 } = utils;
 
 const Create = () => {
   const { network, provider, userAddress } = Connection.useContainer();
@@ -111,12 +73,6 @@ const Create = () => {
     minSponsorTokens,
     priceIdentifier,
   } = perpState;
-  // const liquidationPriceWarningThreshold = 0.1;
-
-  // const { usdPrice } = Balancer.useContainer();
-  // const { contract: weth } = WethContract.useContainer();
-  // const { address: collAddress } = Collateral.useContainer();
-  // const REN_BTC_ADDRESS = "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d";
 
   useEffect(() => {
     setCollateralToMax();
@@ -205,8 +161,6 @@ const Create = () => {
     }
   };
 
-  // const exchangeInfo = getExchangeInfo(tokenSymbol);
-
   if (
     network !== null &&
     provider !== null &&
@@ -221,14 +175,12 @@ const Create = () => {
     minSponsorTokens !== null &&
     tokenDec !== null &&
     tokenAddress !== null &&
-    // exchangeInfo !== undefined &&
     latestPrice !== null &&
     gcr !== null &&
     pendingWithdraw !== null &&
     tokenSymbol !== null &&
     collSymbol !== null &&
     priceIdentifier !== null &&
-    // usdPrice !== null &&
     tokenBalance !== null
   ) {
     const collReqFromWei = parseFloat(decimalsToToken(collReq, 18));
@@ -238,17 +190,9 @@ const Create = () => {
       decimalsToToken(minSponsorTokens, tokenDec)
     );
     const hasPendingWithdraw = pendingWithdraw === "Yes";
-    // const priceIdentifierUtf8 = hexToUtf8(priceIdentifier);
-    // const prettyLatestPrice = Number(latestPrice).toFixed(4);
     const posTokens = Number(posTokensString);
     const posCollateral = Number(posCollateralString);
 
-    // const getExchangeLinkToken = exchangeInfo.getExchangeUrl(tokenAddress);
-
-    // CR of new tokens to create. This must be > GCR according to https://github.com/UMAprotocol/protocol/blob/837869b97edef108fdf68038f54f540ca95cfb44/core/contracts/financial-templates/expiring-multiparty/PricelessPositionManager.sol#L409
-    // const transactionCR = tokensToCreate > 0 ? collateralToDeposit / tokensToCreate : 0;
-    // const pricedTransactionCR =
-    //   latestPrice !== 0 ? (transactionCR / latestPrice).toFixed(4) : "0";
     // Resultant CR of position if new tokens were created by depositing chosen amount of collateral.
     // This is a useful data point for the user but has no effect on the contract's create transaction.
     const resultantCollateral = posCollateral + collateralToDeposit;
@@ -257,15 +201,6 @@ const Create = () => {
       resultantTokens > 0 ? resultantCollateral / resultantTokens : 0;
     const pricedResultantCR =
       latestPrice !== 0 ? (resultantCR / latestPrice).toFixed(4) : "0";
-    // const resultantLiquidationPrice = getLiquidationPrice(
-    //   resultantCollateral,
-    //   resultantTokens,
-    //   collReqFromWei,
-    //   isPricefeedInvertedFromTokenSymbol(tokenSymbol)
-    // ).toFixed(4);
-    // const liquidationPriceDangerouslyFarBelowCurrentPrice = parseFloat(resultantLiquidationPrice) < (1 - liquidationPriceWarningThreshold) * latestPrice;
-    // GCR: total contract collateral / total contract tokens.
-    // const pricedGCR = latestPrice !== 0 ? (gcr / latestPrice).toFixed(4) : null;
 
     // Error conditions for calling create:
     const balanceBelowCollateralToDeposit = Number(balance) < collateralToDeposit;
@@ -276,12 +211,6 @@ const Create = () => {
     const resultantCRBelowRequirement =
       parseFloat(pricedResultantCR) >= 0 &&
       parseFloat(pricedResultantCR) < collReqFromWei;
-    // const transactionCRBelowGCR = transactionCR < gcr;
-    // const resultantCRBelowGCR = resultantCR < gcr;
-    // const isLegacyEmp = legacyEMPs[network.chainId].includes(perp.address);
-    // const cannotMint = isLegacyEmp
-    //   ? transactionCRBelowGCR
-    //   : transactionCRBelowGCR && resultantCRBelowGCR;
 
 
     const mintTokens = async () => {
@@ -312,7 +241,7 @@ const Create = () => {
           setSuccess(true);
         } catch (error) {
           console.error(error);
-          setError(error);
+          setError(createTxError(error));
         }
       } else {
         setError(new Error("Collateral and Token amounts must be positive"));
@@ -338,11 +267,7 @@ const Create = () => {
               <Grid container spacing={3} direction="column">
                 <Grid item style={{ margin: "0px 12%" }}>
                   <Grid item md={12}>
-                    Step 1: Mint Y Dollars using{" "}
-                    {/* {weth &&
-                      collAddress?.toLowerCase() ==
-                        weth.address.toLowerCase() && <>ETH</>}{" "}
-                    {collAddress?.toLowerCase() == REN_BTC_ADDRESS && <>BTC</>} */}
+                    Mint Y Dollars using {collSymbol}
                     <br></br>
                     <br></br>
                     <TextField
@@ -359,7 +284,6 @@ const Create = () => {
                       }
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setCollateral(e.target.value);
-                        // setTokens("0");
                       }}
                       onKeyUp={() => {
                         setTokensToMax(
@@ -369,7 +293,6 @@ const Create = () => {
                           posTokens,
                           posCollateral
                         );
-                        // setTokens("0");
                       }}
                       InputProps={{
                         endAdornment: (
@@ -462,7 +385,6 @@ const Create = () => {
                           onClick={mintTokens}
                           style={{ maxHeight: "56px" }}
                           disabled={
-                            // cannotMint ||
                             balanceBelowCollateralToDeposit ||
                             resultantCRBelowRequirement ||
                             resultantTokensBelowMin ||
