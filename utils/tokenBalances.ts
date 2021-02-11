@@ -16,5 +16,5 @@ export const tokenToDecimals = (amount: string | number | BigNumber, decimals: s
   const ten = new BigNumber(10);
 
   const result = amt.times(ten.pow(dec));
-  return result.toFixed();
+  return result.toFixed(0, 1);
 }

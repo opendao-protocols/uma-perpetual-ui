@@ -12,6 +12,8 @@ import PerpState from "../containers/PerpState";
 import Token from "../containers/Token";
 import Collateral from "../containers/Collateral";
 import Position from "../containers/Position";
+import Totals from "../containers/Totals";
+import Etherscan from "../containers/Etherscan";
 
 import { client } from "../apollo/client";
 
@@ -28,7 +30,11 @@ const WithStateContainerProviders = ({ children }: IProps) => (
             <Token.Provider>
               <Collateral.Provider>
                 <Position.Provider>
-                  {children}
+                  <Totals.Provider>
+                    <Etherscan.Provider>
+                      {children}
+                    </Etherscan.Provider>
+                  </Totals.Provider>
                 </Position.Provider>
               </Collateral.Provider>
             </Token.Provider>

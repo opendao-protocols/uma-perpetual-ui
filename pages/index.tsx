@@ -17,6 +17,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 import Header from "../features/core/Header";
 import PerpSelector from "../features/perp-selector/PerpSelector";
+import Create from "../features/manage-position/Create";
 
 
 const StyledTabs = styled(Tabs)`
@@ -37,6 +38,7 @@ export default function Index() {
       <Box py={4}>
         <Header />
         <PerpSelector />
+        <Create />
       </Box>
     </Container>
   );
