@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { ethers } from "ethers";
-import uma from "@studydefi/money-legos/uma";
 import erc20 from "@studydefi/money-legos/erc20";
 
-import Connection from "./Connection";
 import { PerpetualAddresses } from "../constants/PerpetualAddresses";
+import PerpetualAbi from "../abis/Perpetual.json";
+import Connection from "./Connection";
 
 export interface Perp {
   name: string;
@@ -29,11 +29,7 @@ function usePerpAddresses() {
       // For each Perp address, find its token name and address
       const promises = PerpetualAddresses[network.chainId].map(
         async (perpAddress: string) => {
-          const perp = new ethers.Contract(
-            perpAddress,
-            uma.expiringMultiParty.abi, // TODO - use perp abi
-            signer
-          );
+          const perp = new ethers.Contract(perpAddress, PerpetualAbi, signer);
           const tokenAddr = await perp.tokenCurrency();
           const token = new ethers.Contract(tokenAddr, erc20.abi, signer);
           const tokenName = await token.name();
