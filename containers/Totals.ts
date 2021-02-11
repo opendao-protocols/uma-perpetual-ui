@@ -27,9 +27,15 @@ function useTotals() {
   useEffect(() => {
     if (multiplier && rawColl && totalTokensWei && collDec && tokenDec) {
       // use multiplier to find real total collateral in EMP
-      const totalColl: BigNumber = toBn(decimalsToToken(multiplier, 18)).times(toBn(decimalsToToken(rawColl, collDec)));
-      const totalTokens: BigNumber = toBn(decimalsToToken(totalTokensWei, tokenDec));
-      const gcr: BigNumber = totalTokens.isGreaterThan(0) ? totalColl.div(totalTokens) : toBn(0);
+      const totalColl: BigNumber = toBn(decimalsToToken(multiplier, 18)).times(
+        toBn(decimalsToToken(rawColl, collDec))
+      );
+      const totalTokens: BigNumber = toBn(
+        decimalsToToken(totalTokensWei, tokenDec)
+      );
+      const gcr: BigNumber = totalTokens.isGreaterThan(0)
+        ? totalColl.div(totalTokens)
+        : toBn(0);
 
       // set states
       setTotalCollateral(totalColl.toNumber());

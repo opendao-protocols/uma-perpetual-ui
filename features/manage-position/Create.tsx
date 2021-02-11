@@ -203,15 +203,16 @@ const Create = () => {
       latestPrice !== 0 ? (resultantCR / latestPrice).toFixed(4) : "0";
 
     // Error conditions for calling create:
-    const balanceBelowCollateralToDeposit = Number(balance) < collateralToDeposit;
+    const balanceBelowCollateralToDeposit =
+      Number(balance) < collateralToDeposit;
     const needAllowance =
-      collAllowance !== "Infinity" && Number(collAllowance) < collateralToDeposit;
+      collAllowance !== "Infinity" &&
+      Number(collAllowance) < collateralToDeposit;
     const resultantTokensBelowMin =
       resultantTokens < minSponsorTokensFromWei && resultantTokens !== 0;
     const resultantCRBelowRequirement =
       parseFloat(pricedResultantCR) >= 0 &&
       parseFloat(pricedResultantCR) < collReqFromWei;
-
 
     const mintTokens = async () => {
       if (collateralToDeposit >= 0 && tokensToCreate > 0) {
@@ -416,8 +417,8 @@ const Create = () => {
                     {hash}
                   </Link>
                 ) : (
-                    hash
-                  )}
+                  hash
+                )}
               </Typography>
             </Box>
           )}
@@ -444,11 +445,12 @@ const Create = () => {
         <Typography>
           {perp === null ? (
             <i>
-              Please first connect to Mainnet, and then select Asset from the dropdown above.
+              Please first connect to Mainnet, and then select Asset from the
+              dropdown above.
             </i>
           ) : (
-              <i>Loading...</i>
-            )}
+            <i>Loading...</i>
+          )}
         </Typography>
       </Box>
     );

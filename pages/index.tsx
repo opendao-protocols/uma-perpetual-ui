@@ -19,7 +19,6 @@ import Header from "../features/core/Header";
 import PerpSelector from "../features/perp-selector/PerpSelector";
 import Create from "../features/manage-position/Create";
 
-
 const StyledTabs = styled(Tabs)`
   & .MuiTabs-flexContainer {
     border-bottom: 1px solid #999;
@@ -32,7 +31,6 @@ const StyledTabs = styled(Tabs)`
 `;
 
 export default function Index() {
-
   return (
     <Container maxWidth={"md"}>
       <Box py={4}>

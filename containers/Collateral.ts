@@ -28,8 +28,12 @@ function useCollateral() {
       const symbol: string = await contract.symbol();
       const name: string = await contract.name();
       const decimals: string = toBnFixed(await contract.decimals());
-      const balanceRaw: string = toBnFixed(await contract.balanceOf(userAddress));
-      const allowanceRaw: BigNumber = toBn(await contract.allowance(userAddress, perpAddress));
+      const balanceRaw: string = toBnFixed(
+        await contract.balanceOf(userAddress)
+      );
+      const allowanceRaw: BigNumber = toBn(
+        await contract.allowance(userAddress, perpAddress)
+      );
 
       // calculate readable balance and allowance
       const balance = decimalsToToken(balanceRaw, decimals);

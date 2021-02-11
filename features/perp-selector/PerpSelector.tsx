@@ -39,7 +39,12 @@ const PerpSelector = () => {
   const largeScreen = useMediaQuery(theme.breakpoints.up("sm"));
 
   const { signer } = Connection.useContainer();
-  const { perpAddress, setPerpAddress, perps, loading } = PerpAddresses.useContainer();
+  const {
+    perpAddress,
+    setPerpAddress,
+    perps,
+    loading,
+  } = PerpAddresses.useContainer();
 
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const value = e.target.value;
@@ -64,18 +69,16 @@ const PerpSelector = () => {
               />
             </MenuItem>
           ) : (
-              <MenuItem value={0} disabled={true}>
-                <ListItemText
-                  primary={loading ? "Please wait" : "Select Asset"}
-                />
-              </MenuItem>
-            )}
+            <MenuItem value={0} disabled={true}>
+              <ListItemText
+                primary={loading ? "Please wait" : "Select Asset"}
+              />
+            </MenuItem>
+          )}
           {perps.map((perp) => {
             return (
               <MenuItem value={perp.address} key={perp.address}>
-                <ListItemText
-                  primary={largeScreen ? perp.name : perp.symbol}
-                />
+                <ListItemText primary={largeScreen ? perp.name : perp.symbol} />
               </MenuItem>
             );
           })}

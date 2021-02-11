@@ -122,7 +122,7 @@ const useContractState = () => {
           applicationTime: toBnFixed(res[7].applicationTime),
           proposalTime: toBnFixed(res[7].proposalTime),
           // additional fields
-          identifierStr: ethers.utils.parseBytes32String(res[7].identifier)
+          identifierStr: ethers.utils.parseBytes32String(res[7].identifier),
         } as FundingRate,
         liquidationLiveness: toBnFixed(res[8]) as string,
         minSponsorTokens: toBnFixed(res[9]) as string,

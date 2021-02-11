@@ -33,9 +33,7 @@ const WithStateContainerProviders = ({ children }: IProps) => (
                 <Position.Provider>
                   <Totals.Provider>
                     <Etherscan.Provider>
-                      <PriceFeed.Provider>
-                        {children}
-                      </PriceFeed.Provider>
+                      <PriceFeed.Provider>{children}</PriceFeed.Provider>
                     </Etherscan.Provider>
                   </Totals.Provider>
                 </Position.Provider>
@@ -46,7 +44,7 @@ const WithStateContainerProviders = ({ children }: IProps) => (
       </PerpAddresses.Provider>
     </Connection.Provider>
   </ApolloProvider>
-)
+);
 
 export default class MyApp extends App {
   componentDidMount() {

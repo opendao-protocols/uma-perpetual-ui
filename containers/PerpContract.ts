@@ -16,11 +16,7 @@ function useContract() {
       setContract(null);
     }
     if (perpAddress && isValid && signer) {
-      const instance = new ethers.Contract(
-        perpAddress,
-        PerpetualAbi,
-        signer
-      );
+      const instance = new ethers.Contract(perpAddress, PerpetualAbi, signer);
       setContract(instance);
     }
   }, [perpAddress, isValid, signer]);

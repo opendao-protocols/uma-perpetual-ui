@@ -13,4 +13,3 @@ Live frontend:
 ## Developing on Public Network
 
 Quick run on a public network (Mainnet and Kovan supported): `yarn dev`
-

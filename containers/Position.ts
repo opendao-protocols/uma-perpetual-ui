@@ -62,10 +62,15 @@ function usePosition() {
 
       // Reformat data
       const tokensOutstanding: BigNumber = toBn(position.tokensOutstanding[0]);
-      const withdrawReqAmt: BigNumber = toBn(position.withdrawalRequestAmount[0]);
-      const withdrawReqPassTime: BigNumber =
-        toBn(position.withdrawalRequestPassTimestamp);
-      const xferTime: BigNumber = toBn(position.transferPositionRequestPassTimestamp);
+      const withdrawReqAmt: BigNumber = toBn(
+        position.withdrawalRequestAmount[0]
+      );
+      const withdrawReqPassTime: BigNumber = toBn(
+        position.withdrawalRequestPassTimestamp
+      );
+      const xferTime: BigNumber = toBn(
+        position.transferPositionRequestPassTimestamp
+      );
 
       const collateral: string = decimalsToToken(collRaw, collDec);
       const backingCollateral: string = decimalsToToken(
@@ -104,7 +109,10 @@ function usePosition() {
               collDec
             ),
             lockedCollateral: decimalsToToken(liq.lockedCollateral[0], collDec),
-            tokensOutstanding: decimalsToToken(liq.tokensOutstanding[0], tokenDec),
+            tokensOutstanding: decimalsToToken(
+              liq.tokensOutstanding[0],
+              tokenDec
+            ),
             state: liq.state,
           });
         }

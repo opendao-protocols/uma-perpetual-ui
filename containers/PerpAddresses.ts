@@ -27,22 +27,24 @@ function usePerpAddresses() {
     if (signer && network) {
       setLoading(true);
       // For each Perp address, find its token name and address
-      const promises = PerpetualAddresses[network.chainId].map(async (perpAddress: string) => {
-        const perp = new ethers.Contract(
-          perpAddress,
-          uma.expiringMultiParty.abi,   // TODO - use perp abi
-          signer
-        );
-        const tokenAddr = await perp.tokenCurrency();
-        const token = new ethers.Contract(tokenAddr, erc20.abi, signer);
-        const tokenName = await token.name();
-        const tokenSymbol = await token.symbol();
-        return {
-          name: tokenName,
-          symbol: tokenSymbol,
-          address: perpAddress,
-        };
-      });
+      const promises = PerpetualAddresses[network.chainId].map(
+        async (perpAddress: string) => {
+          const perp = new ethers.Contract(
+            perpAddress,
+            uma.expiringMultiParty.abi, // TODO - use perp abi
+            signer
+          );
+          const tokenAddr = await perp.tokenCurrency();
+          const token = new ethers.Contract(tokenAddr, erc20.abi, signer);
+          const tokenName = await token.name();
+          const tokenSymbol = await token.symbol();
+          return {
+            name: tokenName,
+            symbol: tokenSymbol,
+            address: perpAddress,
+          };
+        }
+      );
 
       // set state w/ data
       const perps = await Promise.all(promises);
@@ -54,7 +56,6 @@ function usePerpAddresses() {
   useEffect(() => {
     getPerps();
   }, [signer, network]);
-
 
   // set Perp address from query string (if it exists and is not the same)
   useEffect(() => {
