@@ -57,11 +57,13 @@ const AddressBox = styled.div`
 `;
 
 const Header = () => {
-  const { connect, signer, network, address } = Connection.useContainer();
+  const { connect, signer, network, userAddress } = Connection.useContainer();
   const connected = signer !== null;
 
   const networkName = network?.name === "homestead" ? "mainnet" : network?.name;
-  const shortAddress = `${address?.substr(0, 5)}…${address?.substr(-4)}`;
+  const shortAddress = `${userAddress?.substr(0, 5)}…${userAddress?.substr(
+    -4
+  )}`;
 
   return (
     <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -75,8 +77,8 @@ const Header = () => {
         </a>
       </Box>
       <Box display="flex" alignItems="center">
-        {address && (
-          <AddressBox title={address || undefined}>
+        {userAddress && (
+          <AddressBox title={userAddress || undefined}>
             <div>{shortAddress}</div>
           </AddressBox>
         )}
