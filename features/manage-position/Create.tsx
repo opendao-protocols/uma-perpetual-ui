@@ -19,7 +19,7 @@ import Token from "../../containers/Token";
 import PerpState from "../../containers/PerpState";
 import Totals from "../../containers/Totals";
 import Position from "../../containers/Position";
-// import PriceFeed from "../../containers/PriceFeed";
+import PriceFeed from "../../containers/PriceFeed";
 import Etherscan from "../../containers/Etherscan";
 import Connection from "../../containers/Connection";
 
@@ -94,8 +94,7 @@ const Create = () => {
     tokens: posTokensString,
     pendingWithdraw,
   } = Position.useContainer();
-  // const { latestPrice } = PriceFeed.useContainer();
-  const latestPrice: number | null = 1;
+  const { latestPrice } = PriceFeed.useContainer();
   const { getEtherscanUrl } = Etherscan.useContainer();
 
   const [collateral, setCollateral] = useState<string>("0");
@@ -462,14 +461,14 @@ const Create = () => {
                           variant="contained"
                           onClick={mintTokens}
                           style={{ maxHeight: "56px" }}
-                        disabled={
-                          // cannotMint ||
-                          balanceBelowCollateralToDeposit ||
-                          resultantCRBelowRequirement ||
-                          resultantTokensBelowMin ||
-                          collateralToDeposit < 0 ||
-                          tokensToCreate <= 0
-                        }
+                          disabled={
+                            // cannotMint ||
+                            balanceBelowCollateralToDeposit ||
+                            resultantCRBelowRequirement ||
+                            resultantTokensBelowMin ||
+                            collateralToDeposit < 0 ||
+                            tokensToCreate <= 0
+                          }
                         >
                           {`Create ${tokensToCreate} ${tokenSymbol} with ${collateralToDeposit} ${collSymbol}`}
                         </Button>
