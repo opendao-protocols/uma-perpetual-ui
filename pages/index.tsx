@@ -20,6 +20,7 @@ import Header from "../features/core/Header";
 import Footer from "../features/core/Footer";
 import PerpSelector from "../features/perp-selector/PerpSelector";
 import Create from "../features/manage-position/Create";
+import ManagePosition from "../features/manage-position/ManagePosition";
 
 const StyledTabs = styled(Tabs)`
   & .MuiTabs-flexContainer {
@@ -120,7 +121,7 @@ export default function Index() {
           </div>
         </Hidden>
         {selectedMenuItem === "Mint y-Dollars" && <Create />}
-        {selectedMenuItem === "My Positions" && <i>TODO</i>}
+        {selectedMenuItem === "My Positions" && <ManagePosition />}
         <Footer />
       </Box>
     </Container>

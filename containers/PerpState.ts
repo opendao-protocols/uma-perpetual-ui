@@ -39,6 +39,7 @@ interface ContractState {
   totalPositionCollateral: string | null;
   totalTokensOutstanding: string | null;
   withdrawalLiveness: string | null;
+  currentTime: string | null;
 
   // additional fields
   priceIdentifierStr: string | null;
@@ -65,6 +66,7 @@ const initState = {
   totalPositionCollateral: null,
   totalTokensOutstanding: null,
   withdrawalLiveness: null,
+  currentTime: null,
 
   // additional fields
   priceIdentifierStr: null,
@@ -104,6 +106,7 @@ const useContractState = () => {
         perp.totalPositionCollateral(),
         perp.totalTokensOutstanding(),
         perp.withdrawalLiveness(),
+        perp.getCurrentTime(),
       ]);
 
       const newState: ContractState = {
@@ -136,6 +139,7 @@ const useContractState = () => {
         totalPositionCollateral: toBnFixed(res[17]) as string,
         totalTokensOutstanding: toBnFixed(res[18]) as string,
         withdrawalLiveness: toBnFixed(res[19]) as string,
+        currentTime: toBnFixed(res[20]) as string,
 
         // additional fields
         priceIdentifierStr: ethers.utils.parseBytes32String(res[11]) as string,

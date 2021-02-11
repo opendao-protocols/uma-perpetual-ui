@@ -22,6 +22,7 @@ function useToken() {
   const [decimals, setDecimals] = useState<string | null>(null);
   const [allowance, setAllowance] = useState<string | "Infinity" | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
+  const [balanceBN, setBalanceBN] = useState<BigNumber | null>(null);
 
   const getTokenInfo = async () => {
     if (contract) {
@@ -35,6 +36,7 @@ function useToken() {
         await contract.allowance(userAddress, perpAddress)
       );
 
+      const balanceBN = toBn(balanceRaw);
       // calculate readable balance and allowance
       const balance = decimalsToToken(balanceRaw, decimals);
       const allowance = allowanceRaw.eq(toBn(ethers.constants.MaxUint256))
@@ -46,6 +48,7 @@ function useToken() {
       setName(name);
       setDecimals(decimals);
       setBalance(balance);
+      setBalanceBN(balanceBN);
       setAllowance(allowance);
     }
   };
@@ -66,6 +69,7 @@ function useToken() {
     setName(null);
     setDecimals(null);
     setBalance(null);
+    setBalanceBN(null);
     setAllowance(null);
     getTokenInfo();
   }, [contract]);
@@ -93,6 +97,7 @@ function useToken() {
     symbol,
     decimals,
     balance,
+    balanceBN,
     allowance,
     setMaxAllowance,
   };
