@@ -17,6 +17,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import PerpAddresses from "../containers/PerpAddresses";
 import Collateral from "../containers/Collateral";
 import Header from "../features/core/Header";
+import Footer from "../features/core/Footer";
 import PerpSelector from "../features/perp-selector/PerpSelector";
 import Create from "../features/manage-position/Create";
 
@@ -120,6 +121,7 @@ export default function Index() {
         </Hidden>
         {selectedMenuItem === "Mint y-Dollars" && <Create />}
         {selectedMenuItem === "My Positions" && <i>TODO</i>}
+        <Footer />
       </Box>
     </Container>
   );
