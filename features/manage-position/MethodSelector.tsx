@@ -53,26 +53,24 @@ const MethodSelector = ({ method, handleChange }: IProps) => {
             onChange={handleChange}
             input={<BootstrapInput />}
           >
-            [
-              <MenuItem key={"redeem"} value={"redeem"}>
+            <MenuItem key={"redeem"} value={"redeem"}>
               <ListItemText
                 primary="Redeem"
                 secondary="Redeem synthetics for collateral."
               />
-            </MenuItem>,
-              <MenuItem key={"deposit"} value={"deposit"}>
+            </MenuItem>
+            <MenuItem key={"deposit"} value={"deposit"}>
               <ListItemText
                 primary="Deposit"
                 secondary="Add to position collateral."
               />
-            </MenuItem>,
-              <MenuItem key={"withdraw"} value={"withdraw"}>
+            </MenuItem>
+            <MenuItem key={"withdraw"} value={"withdraw"}>
               <ListItemText
                 primary="Withdraw"
                 secondary="Remove position collateral"
               />
-            </MenuItem>,
-            ]
+            </MenuItem>
           </Select>
         </FormWrapper>
       </Box>

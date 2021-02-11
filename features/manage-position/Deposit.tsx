@@ -81,8 +81,12 @@ const Deposit = () => {
     ).toFixed(4);
 
     // Error conditions for calling deposit:
-    const balanceBelowCollateralToDeposit = toBn(collBalance).isLessThan(toBn(collateralToDeposit));
-    const needAllowance = collAllowance !== "Infinity" && toBn(collAllowance).isLessThan(toBn(collateralToDeposit));
+    const balanceBelowCollateralToDeposit = toBn(collBalance).isLessThan(
+      toBn(collateralToDeposit)
+    );
+    const needAllowance =
+      collAllowance !== "Infinity" &&
+      toBn(collAllowance).isLessThan(toBn(collateralToDeposit));
 
     const depositCollateral = async () => {
       if (collateralToDeposit > 0) {

@@ -92,11 +92,14 @@ const Redeem = () => {
     const resultantCollateral = posColl - proportionCollateralReceived;
 
     // Error conditions for calling redeem: (Some of these might be redundant)
-    const balanceBelowTokensToRedeem = toBn(tokenBalance).isLessThan(tokensToRedeem);
+    const balanceBelowTokensToRedeem = toBn(tokenBalance).isLessThan(
+      tokensToRedeem
+    );
     const invalidRedeemAmount =
       tokensToRedeem < posTokens && tokensToRedeem > maxPartialRedeem;
     const needAllowance =
-      tokenAllowance !== "Infinity" && toBn(tokenAllowance).isLessThan(tokensToRedeem);
+      tokenAllowance !== "Infinity" &&
+      toBn(tokenAllowance).isLessThan(tokensToRedeem);
 
     const redeemTokens = async () => {
       if (tokensToRedeem > 0) {

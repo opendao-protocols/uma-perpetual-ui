@@ -41,7 +41,8 @@ const Manager = () => {
       <Box py={2} textAlign="center">
         <Typography>
           <i>
-            Please first connect to Mainnet, and then select Asset from the dropdown above.
+            Please first connect to Mainnet, and then select Asset from the
+            dropdown above.
           </i>
         </Typography>
       </Box>
