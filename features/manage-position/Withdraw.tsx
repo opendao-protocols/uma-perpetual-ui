@@ -23,6 +23,7 @@ import Etherscan from "../../containers/Etherscan";
 import { getLiquidationPrice } from "../../utils/getLiquidationPrice";
 import { isPricefeedInvertedFromTokenSymbol } from "../../utils/getOffchainPrice";
 import { decimalsToToken, tokenToDecimals } from "../../utils/tokenBalances";
+import { createTxError } from "../../utils/ethTxErrorHandler";
 
 const Important = styled(Typography)`
   color: red;
@@ -46,7 +47,7 @@ const Withdraw = () => {
     priceIdentifier,
   } = perpState;
 
-  const { contract: emp } = PerpContract.useContainer();
+  const { contract: perp } = PerpContract.useContainer();
   const { symbol: tokenSymbol } = Token.useContainer();
   const { symbol: collSymbol, decimals: collDec } = Collateral.useContainer();
   const {
@@ -68,7 +69,7 @@ const Withdraw = () => {
 
   if (
     collateral !== null &&
-    emp !== null &&
+    perp !== null &&
     collDec !== null &&
     collReq !== null &&
     posCollString !== null &&
@@ -156,18 +157,18 @@ const Withdraw = () => {
         try {
           const collateralToWithdrawWei = tokenToDecimals(collateral, collDec);
           if (resultantCRBelowGCR) {
-            const tx = await emp.requestWithdrawal([collateralToWithdrawWei]);
+            const tx = await perp.requestWithdrawal([collateralToWithdrawWei]);
             setHash(tx.hash as string);
             await tx.wait();
           } else {
-            const tx = await emp.withdraw([collateralToWithdrawWei]);
+            const tx = await perp.withdraw([collateralToWithdrawWei]);
             setHash(tx.hash as string);
             await tx.wait();
           }
           setSuccess(true);
         } catch (error) {
           console.error(error);
-          setError(error);
+          setError(createTxError(error));
         }
       } else {
         setError(new Error("Collateral amount must be positive."));
@@ -180,13 +181,13 @@ const Withdraw = () => {
         setSuccess(null);
         setError(null);
         try {
-          const tx = await emp.withdrawPassedRequest();
+          const tx = await perp.withdrawPassedRequest();
           setHash(tx.hash as string);
           await tx.wait();
           setSuccess(true);
         } catch (error) {
           console.error(error);
-          setError(error);
+          setError(createTxError(error));
         }
       } else {
         setError(
@@ -203,13 +204,13 @@ const Withdraw = () => {
         setSuccess(null);
         setError(null);
         try {
-          const tx = await emp.cancelWithdrawal();
+          const tx = await perp.cancelWithdrawal();
           setHash(tx.hash as string);
           await tx.wait();
           setSuccess(true);
         } catch (error) {
           console.error(error);
-          setError(error);
+          setError(createTxError(error));
         }
       } else {
         setError(new Error("No pending withdraw to cancel."));

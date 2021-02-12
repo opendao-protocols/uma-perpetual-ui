@@ -12,6 +12,7 @@ import {
 
 import { toBn } from "../../utils/BN";
 import { decimalsToToken, tokenToDecimals } from "../../utils/tokenBalances";
+import { createTxError } from "../../utils/ethTxErrorHandler";
 import PerpContract from "../../containers/PerpContract";
 import PerpState from "../../containers/PerpState";
 import Collateral from "../../containers/Collateral";
@@ -29,7 +30,7 @@ const MaxLink = styled.div`
 `;
 
 const Redeem = () => {
-  const { contract: emp } = PerpContract.useContainer();
+  const { contract: perp } = PerpContract.useContainer();
   const { perpState } = PerpState.useContainer();
   const { minSponsorTokens } = perpState;
   const { symbol: collSymbol } = Collateral.useContainer();
@@ -62,7 +63,7 @@ const Redeem = () => {
     tokenDec !== null &&
     tokenSymbol !== null &&
     tokenAllowance !== null &&
-    emp !== null &&
+    perp !== null &&
     pendingWithdraw !== null &&
     Number(posCollString) > 0 // If position has no collateral, then don't render redeem component.
   ) {
@@ -108,13 +109,13 @@ const Redeem = () => {
         setError(null);
         try {
           const tokensToRedeemWei = tokenToDecimals(tokens, tokenDec);
-          const tx = await emp.redeem([tokensToRedeemWei]);
+          const tx = await perp.redeem([tokensToRedeemWei]);
           setHash(tx.hash as string);
           await tx.wait();
           setSuccess(true);
         } catch (error) {
           console.error(error);
-          setError(error);
+          setError(createTxError(error));
         }
       } else {
         setError(new Error("Token amounts must be positive"));

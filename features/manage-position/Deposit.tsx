@@ -15,6 +15,7 @@ import Etherscan from "../../containers/Etherscan";
 
 import { getLiquidationPrice } from "../../utils/getLiquidationPrice";
 import { isPricefeedInvertedFromTokenSymbol } from "../../utils/getOffchainPrice";
+import { createTxError } from "../../utils/ethTxErrorHandler";
 
 const Link = styled.a`
   color: white;
@@ -24,7 +25,7 @@ const Link = styled.a`
 const { parseBytes32String: hexToUtf8 } = utils;
 
 const Deposit = () => {
-  const { contract: emp } = PerpContract.useContainer();
+  const { contract: perp } = PerpContract.useContainer();
   const { perpState } = PerpState.useContainer();
   const { symbol: tokenSymbol } = Token.useContainer();
   const {
@@ -55,7 +56,7 @@ const Deposit = () => {
     collAllowance !== null &&
     collBalance !== null &&
     latestPrice !== null &&
-    emp !== null &&
+    perp !== null &&
     collReq !== null &&
     collDec !== null &&
     priceIdentifier !== null &&
@@ -95,13 +96,13 @@ const Deposit = () => {
         setError(null);
         try {
           const collateralToDepositWei = tokenToDecimals(collateral, collDec);
-          const tx = await emp.deposit([collateralToDepositWei]);
+          const tx = await perp.deposit([collateralToDepositWei]);
           setHash(tx.hash as string);
           await tx.wait();
           setSuccess(true);
         } catch (error) {
           console.error(error);
-          setError(error);
+          setError(createTxError(error));
         }
       } else {
         setError(new Error("Collateral amount must be positive."));
