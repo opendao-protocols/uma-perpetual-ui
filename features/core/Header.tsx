@@ -57,7 +57,13 @@ const AddressBox = styled.div`
 `;
 
 const Header = () => {
-  const { connect, signer, network, userAddress } = Connection.useContainer();
+  const {
+    connect,
+    disconnect,
+    signer,
+    network,
+    userAddress,
+  } = Connection.useContainer();
   const connected = signer !== null;
 
   const networkName = network?.name === "homestead" ? "mainnet" : network?.name;
@@ -83,19 +89,24 @@ const Header = () => {
           </AddressBox>
         )}
         {connected ? (
-          <ConnectButton variant="outlined" styled={{ connected }}>
-            <span
-              style={{
-                color: "#6e62ff",
-                fontSize: "1.4em",
-                marginRight: "0.1em",
-              }}
-            >
-              ●
-            </span>
-            &nbsp;
-            {networkName}
-          </ConnectButton>
+          <>
+            <ConnectButton variant="outlined" styled={{ connected }}>
+              <span
+                style={{
+                  color: "#6e62ff",
+                  fontSize: "1.4em",
+                  marginRight: "0.1em",
+                }}
+              >
+                ●
+              </span>
+              &nbsp;
+              {networkName}
+            </ConnectButton>
+            <AddressBox title="Click to Disconnect Wallet" onClick={disconnect}>
+              <div>🦊</div>
+            </AddressBox>
+          </>
         ) : (
           <ConnectButton
             variant="contained"

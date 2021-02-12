@@ -20,6 +20,11 @@ export const config = (network: Network | null) => {
         wallets: [
           { walletName: "metamask", preferred: true },
           {
+            walletName: "walletConnect",
+            rpc: { [network?.chainId || 1]: infuraRpc },
+            preferred: true,
+          },
+          {
             walletName: "imToken",
             rpcUrl:
               !!network && network.chainId === 1
@@ -29,25 +34,23 @@ export const config = (network: Network | null) => {
           },
           { walletName: "coinbase", preferred: true },
           {
-            walletName: "portis",
-            apiKey: process.env.NEXT_PUBLIC_PORTIS_API_KEY,
-          },
-          { walletName: "trust", rpcUrl: infuraRpc },
-          { walletName: "dapper" },
-          {
-            walletName: "walletConnect",
-            rpc: { [network?.chainId || 1]: infuraRpc },
-          },
-          { walletName: "walletLink", rpcUrl: infuraRpc },
-          { walletName: "opera" },
-          { walletName: "operaTouch" },
-          { walletName: "torus" },
-          { walletName: "status" },
-          { walletName: "unilogin" },
-          {
             walletName: "ledger",
             rpcUrl: infuraRpc,
+            preferred: true,
           },
+          {
+            walletName: "portis",
+            apiKey: process.env.NEXT_PUBLIC_PORTIS_API_KEY,
+            preferred: true,
+          },
+          { walletName: "trust", rpcUrl: infuraRpc, preferred: true },
+          { walletName: "dapper", preferred: true },
+          { walletName: "walletLink", rpcUrl: infuraRpc, preferred: true },
+          { walletName: "opera", preferred: true },
+          { walletName: "operaTouch", preferred: true },
+          { walletName: "torus", preferred: true },
+          { walletName: "status", preferred: true },
+          { walletName: "unilogin", preferred: true },
         ],
       },
       walletCheck: [

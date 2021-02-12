@@ -29,26 +29,26 @@ function useConnection() {
       dappId: config(network).onboardConfig.apiKey,
       hideBranding: true,
       networkId: 1, // Default to main net. If on a different network will change with the subscription.
+      darkMode: true,
       subscriptions: {
         address: (address: string | null) => {
           setUserAddress(address);
         },
         network: async (networkId: any) => {
-          if (!SUPPORTED_NETWORK_IDS.includes(networkId)) {
-            alert("This dApp will work only with the Mainnet");
-          }
           onboard?.config({ networkId: networkId });
         },
         wallet: async (wallet: Wallet) => {
-          if (wallet.provider) {
+          if (wallet.provider && wallet.name) {
             const ethersProvider = new ethers.providers.Web3Provider(
               wallet.provider
             );
             setProvider(ethersProvider);
             setNetwork(await ethersProvider.getNetwork());
+            window.localStorage.setItem("selectedWallet", wallet.name);
           } else {
             setProvider(null);
             setNetwork(null);
+            window.localStorage.removeItem("selectedWallet");
           }
         },
       },
@@ -56,7 +56,14 @@ function useConnection() {
       walletCheck: config(network).onboardConfig.walletCheck,
     });
 
-    await onboardInstance.walletSelect();
+    const previouslySelectedWallet = window.localStorage.getItem(
+      "selectedWallet"
+    );
+    if (previouslySelectedWallet != null) {
+      await onboardInstance.walletSelect(previouslySelectedWallet);
+    } else {
+      await onboardInstance.walletSelect();
+    }
     await onboardInstance.walletCheck();
     setOnboard(onboardInstance);
   };
@@ -70,6 +77,24 @@ function useConnection() {
       alert(error.message);
     }
   };
+
+  const disconnect = () => {
+    if (onboard) {
+      onboard.walletReset();
+      window.localStorage.removeItem("selectedWallet");
+      window.location.reload();
+    }
+  };
+
+  // autoselect wallet on load
+  useEffect(() => {
+    const previouslySelectedWallet = window.localStorage.getItem(
+      "selectedWallet"
+    );
+    if (previouslySelectedWallet != null) {
+      connect();
+    }
+  }, []);
 
   // create observable to stream new blocks
   useEffect(() => {
@@ -98,6 +123,7 @@ function useConnection() {
     network,
     userAddress,
     connect,
+    disconnect,
     error,
     block$,
   };
