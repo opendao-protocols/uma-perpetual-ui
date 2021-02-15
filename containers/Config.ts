@@ -56,7 +56,7 @@ export const config = (network: Network | null) => {
       walletCheck: [
         { checkName: "connect" },
         { checkName: "accounts" },
-        { checkName: "network" },
+        // { checkName: "network" },
         { checkName: "balance", minimumBalance: "0" },
       ],
     },

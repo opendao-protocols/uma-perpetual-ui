@@ -268,7 +268,7 @@ const Create = () => {
               <Grid container spacing={3} direction="column">
                 <Grid item style={{ margin: "0px 12%" }}>
                   <Grid item md={12}>
-                    Mint Y Dollars using {collSymbol}
+                    Mint Perpetual {tokenSymbol} using {collSymbol}
                     <br></br>
                     <br></br>
                     <TextField

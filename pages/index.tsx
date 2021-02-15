@@ -34,9 +34,10 @@ const StyledTabs = styled(Tabs)`
 `;
 
 export default function Index() {
+  const MINT = "Mint";
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>(
-    "Mint y-Dollars"
+    MINT
   );
   const [options, setOptions] = useState<Array<string>>([]);
   const { perpAddress } = PerpAddresses.useContainer();
@@ -44,12 +45,12 @@ export default function Index() {
 
   const buildOptionsList = () => {
     // Default list that all contracts have.
-    let menuOptions = ["Mint y-Dollars", "My Positions"];
+    let menuOptions = [MINT, "My Positions"];
 
     // Update selected page if the user toggles between Perps while selected on
     // invalid pages (i.e on Wrap/Unwrap then moves to uUSDrBTC).
     if (menuOptions.indexOf(selectedMenuItem) == -1) {
-      setSelectedMenuItem("Mint y-Dollars");
+      setSelectedMenuItem(MINT);
     }
     return menuOptions;
   };
@@ -120,7 +121,7 @@ export default function Index() {
             </Menu>
           </div>
         </Hidden>
-        {selectedMenuItem === "Mint y-Dollars" && <Create />}
+        {selectedMenuItem === MINT && <Create />}
         {selectedMenuItem === "My Positions" && <ManagePosition />}
         <Footer />
       </Box>
